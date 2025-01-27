@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 07:40:45 by skock             #+#    #+#             */
-/*   Updated: 2025/01/27 14:40:20 by skock            ###   ########.fr       */
+/*   Updated: 2025/01/27 15:04:35 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,25 @@ char	*get_cmd_path(t_pipex *pipex, char *cmd)
 	return (NULL);
 }
 
+void	execute_cmd(t_pipex *pipex)
+{
+	int		fd[2];
+	t_cmd	*temp;
+
+	temp = pipex->cmd_lst->cmd_path;
+	while (temp->next)
+	{
+		pipe(fd);
+		fork();
+		if (pipex->cmd_lst->pid == -1)
+			exit(1);
+		if (pipex->cmd_lst->pid == 0)
+			parent_process();
+		else
+			child_process();
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_pipex	pipex;
@@ -175,7 +194,7 @@ int	main(int ac, char **av, char **env)
 		parsing_path(env, &pipex);
 		is_here_doc(&pipex, av);
 		fill_cmd_lst(&pipex, av, ac);
-		// execute_cmd(&pipex);
+		execute_cmd(&pipex);
 	}
 	free_pipex_tab(&pipex);
 }

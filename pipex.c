@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 07:40:45 by skock             #+#    #+#             */
-/*   Updated: 2025/01/27 11:46:31 by skock            ###   ########.fr       */
+/*   Updated: 2025/01/27 14:40:20 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_lst(t_pipex *pipex)
 	i = 0;
 	while (temp)
 	{
-		printf("node %d {%s}\n", temp->index, temp->cmd);
+		printf("node %d {%s}\n", temp->index, temp->cmd_path);
 		temp = temp->next;
 	}
 }
@@ -51,7 +51,8 @@ t_cmd	*ft_lstnew(t_pipex *pipex, char **av)
 	new = malloc(sizeof(t_cmd));
 	if (!new)
 		return (NULL);
-	new->cmd = av[pipex->index];
+	new->args = ft_split(av[pipex->index], ' ');
+	new->cmd_path = get_cmd_path(pipex, new->args[0]);
 	new->next = NULL;
 	new->index = index++;
 	pipex->index++;
@@ -64,12 +65,12 @@ void	free_pipex_tab(t_pipex *pipex)
 	
 	i = 0;
 
-	while (pipex->path[i])
+	while (pipex->env[i])
 	{
-		free(pipex->path[i]);
+		free(pipex->env[i]);
 		i++;
 	}
-	free(pipex->path);
+	free(pipex->env);
 }
 
 void	parsing_path(char **env, t_pipex *pipex)
@@ -89,15 +90,15 @@ void	parsing_path(char **env, t_pipex *pipex)
 			count = 0;
 			while (path[count])
 				count++;
-			pipex->path = malloc(sizeof(char *) * (count + 1));
+			pipex->env = malloc(sizeof(char *) * (count + 1));
 			j = 0;
 			while (path[j])
 			{
-				pipex->path[j] = ft_strjoin(path[j], "/");
+				pipex->env[j] = ft_strjoin(path[j], "/");
 				free(path[j]);
 				j++;
 			}
-			pipex->path[j] = NULL;
+			pipex->env[j] = NULL;
 			break ;
 		}
 		i++;
@@ -120,7 +121,7 @@ void	is_here_doc(t_pipex *pipex, char **av)
 	}
 }
 
-int	fill_cmd_lst(t_pipex *pipex, char **av, int ac)
+void	fill_cmd_lst(t_pipex *pipex, char **av, int ac)
 {
 	t_cmd	*new_cmd;
 
@@ -128,20 +129,40 @@ int	fill_cmd_lst(t_pipex *pipex, char **av, int ac)
 	{
 		new_cmd = ft_lstnew(pipex, av);
 		if (!new_cmd)
-		{
-			printf("Erreur : allocation mémoire pour un nœud a échoué.\n");
-			return (0);
-		}
+			return ;
 		ft_lstadd_back(&pipex->cmd_lst, new_cmd);
 	}
 	if (!pipex->cmd_lst)
 	{
 		printf("ERROR WHILE TRYING TO FILL LIST");
 		exit(1);
-		return (0);
 	}
 	print_lst(pipex);
-	return (1);
+}
+void	execute_cmd(t_pipex *pipex)
+{
+	t_cmd	*temp;
+	
+	temp = pipex->cmd_lst;
+}
+
+char	*get_cmd_path(t_pipex *pipex, char *cmd)
+{
+	int		i;
+	char	*res;
+
+	i = 0;
+	while (pipex->env[i])
+	{
+		res = ft_strjoin(pipex->env[i], cmd);
+		if (!res)
+			return (NULL);
+		if (!access(res, X_OK))
+			return (res);
+		free(res);
+		i++;
+	}
+	return (NULL);
 }
 
 int	main(int ac, char **av, char **env)
@@ -154,6 +175,7 @@ int	main(int ac, char **av, char **env)
 		parsing_path(env, &pipex);
 		is_here_doc(&pipex, av);
 		fill_cmd_lst(&pipex, av, ac);
+		// execute_cmd(&pipex);
 	}
 	free_pipex_tab(&pipex);
 }

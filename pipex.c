@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 07:40:45 by skock             #+#    #+#             */
-/*   Updated: 2025/01/27 15:04:35 by skock            ###   ########.fr       */
+/*   Updated: 2025/01/27 15:43:33 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,12 +139,6 @@ void	fill_cmd_lst(t_pipex *pipex, char **av, int ac)
 	}
 	print_lst(pipex);
 }
-void	execute_cmd(t_pipex *pipex)
-{
-	t_cmd	*temp;
-	
-	temp = pipex->cmd_lst;
-}
 
 char	*get_cmd_path(t_pipex *pipex, char *cmd)
 {
@@ -173,14 +167,19 @@ void	execute_cmd(t_pipex *pipex)
 	temp = pipex->cmd_lst->cmd_path;
 	while (temp->next)
 	{
-		pipe(fd);
-		fork();
-		if (pipex->cmd_lst->pid == -1)
+		if (pipe(fd) == -1)
+		{
+			perror("Error while creating the pipe.\n");
 			exit(1);
-		if (pipex->cmd_lst->pid == 0)
+		}
+		temp->pid = fork();
+		if (temp->pid == -1)
+			exit(1);
+		if (temp->pid == 0)
 			parent_process();
 		else
 			child_process();
+		temp = temp->next;
 	}
 }
 

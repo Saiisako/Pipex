@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 07:40:45 by skock             #+#    #+#             */
-/*   Updated: 2025/01/30 13:23:09 by skock            ###   ########.fr       */
+/*   Updated: 2025/01/30 13:38:29 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,16 @@ void	is_here_doc(t_pipex *pipex, char **av, int ac)
 	else
 	{
 		pipex->infile_fd = open(av[1], O_RDONLY, 0644);
+		if (pipex->infile_fd < 0)
+			pipex->infile_fd = open("/dev/null", O_RDONLY);
 		pipex->outfile_fd = open(av[ac - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+		if (pipex->outfile_fd < 0)
+		{
+			perror(av[ac - 1]);
+			pipex->status = 1;
+		}
 		pipex->is_here_doc = false;
 		pipex->index = 2;
-		printf("pipex_entering\n");
 	}
 }
 
@@ -112,7 +118,7 @@ void	fill_cmd_lst(t_pipex *pipex, char **av, int ac)
 		pipex->status = 0;
 	if (!pipex->cmd_lst)
 	{
-		printf("ERROR WHILE TRYING TO FILL LIST");
+		ft_putstr_fd("ERROR WHILE TRYING TO FILL LIST", 2);
 		exit(1);
 	}
 }

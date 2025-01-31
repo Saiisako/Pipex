@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 07:42:03 by skock             #+#    #+#             */
-/*   Updated: 2025/01/31 10:37:25 by skock            ###   ########.fr       */
+/*   Updated: 2025/01/31 14:00:31 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_pipex
 
 // PARSING
 void	parsing_path(char **env, t_pipex *pipex);
-void	is_here_doc(t_pipex *pipex, char **av, int ac);
 char	*get_cmd_path(t_pipex *pipex, char *cmd);
 // LIST
 void	fill_cmd_lst(t_pipex *pipex, char **av, int ac);
@@ -52,6 +51,15 @@ t_cmd	*ft_lstnew(t_pipex *pipex, char **av);
 void	free_pipex_tab(char **args);
 void	free_pipex(t_pipex *pipex);
 void	free_lst(t_cmd *cmd);
-// PRINT
+void	free_lst_all(t_cmd *lst);
+void	exec_error(t_pipex *pipex, t_cmd *current);
+// EXEC
+void	execute_cmd(t_pipex *pipex, char **env);
+void	child_process(t_pipex *pipex, t_cmd *cmd, int *fd, char **env);
+void	parent_process(t_pipex *pipex, int *fd);
+void	wait_all(t_pipex *pipex);
+// HERE_DOC
+void	here_doc(t_pipex *pipex, char **av);
+void	is_here_doc(t_pipex *pipex, char **av, int ac);
 
 #endif

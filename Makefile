@@ -6,7 +6,7 @@ RM = rm -rf
 LIBFT = library/libft/libft.a
 LIBFT_FLAGS = -L./library/libft -lft
 
-SRCS	=	pipex.c free.c list.c
+SRCS	=	pipex.c free.c list.c here_doc.c parsing.c
 
 #SRCS_BONUS	=
 

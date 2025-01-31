@@ -6,22 +6,22 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 12:21:23 by skock             #+#    #+#             */
-/*   Updated: 2025/01/29 12:22:39 by skock            ###   ########.fr       */
+/*   Updated: 2025/01/31 11:31:59 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	free_pipex_tab(t_pipex *pipex)
+void	free_pipex_tab(char **arg)
 {
 	int	i;
 	
 	i = 0;
 
-	while (pipex->env[i])
+	while (arg[i])
 	{
-		free(pipex->env[i]);
+		free(arg[i]);
 		i++;
 	}
-	free(pipex->env);
+	free(arg);
 }

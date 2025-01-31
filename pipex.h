@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 07:42:03 by skock             #+#    #+#             */
-/*   Updated: 2025/01/30 13:13:01 by skock            ###   ########.fr       */
+/*   Updated: 2025/01/31 10:37:25 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,13 @@ void	parsing_path(char **env, t_pipex *pipex);
 void	is_here_doc(t_pipex *pipex, char **av, int ac);
 char	*get_cmd_path(t_pipex *pipex, char *cmd);
 // LIST
-void		fill_cmd_lst(t_pipex *pipex, char **av, int ac);
+void	fill_cmd_lst(t_pipex *pipex, char **av, int ac);
 void	ft_lstadd_back(t_cmd **lst, t_cmd *new);
 t_cmd	*ft_lstnew(t_pipex *pipex, char **av);
 // FREE
-void	free_pipex_tab(t_pipex *pipex);
+void	free_pipex_tab(char **args);
+void	free_pipex(t_pipex *pipex);
+void	free_lst(t_cmd *cmd);
 // PRINT
 
 #endif

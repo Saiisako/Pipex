@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 07:40:45 by skock             #+#    #+#             */
-/*   Updated: 2025/01/30 13:38:29 by skock            ###   ########.fr       */
+/*   Updated: 2025/01/31 11:30:07 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	fill_cmd_lst(t_pipex *pipex, char **av, int ac)
 	if (!pipex->cmd_lst)
 	{
 		ft_putstr_fd("ERROR WHILE TRYING TO FILL LIST", 2);
+		free_lst(pipex->cmd_lst);
 		exit(1);
 	}
 }
@@ -146,13 +147,36 @@ char	*get_cmd_path(t_pipex *pipex, char *cmd)
 	}
 	return (NULL);
 }
+void	free_lst(t_cmd *lst)
+{
+	t_cmd	*temp;
+
+	temp = NULL;
+	while(temp)
+	{
+		temp = lst->next;
+		free(lst);
+		lst = temp;
+	}
+	return ;
+}
 
 void	exec_error(t_pipex *pipex, t_cmd *current)
 {
-	(void)pipex;
+	free_pipex_tab(pipex->cmd_lst->args);
+	free_pipex_tab(pipex->env);
+	free_lst(pipex->cmd_lst);
+	// free(pipex->cmd_lst->cmd_path);
+	// free(current);
+	// free(pipex);
 	ft_putstr_fd("Error: command not found: ", 2);
 	ft_putstr_fd(current->args[0], 2);
-	exit(127);
+	if (errno == EACCES)
+		exit(126);
+	else if (errno == ENOENT)
+		exit (127);
+	else
+		exit (1);
 }
 
 void	child_process(t_pipex *pipex, t_cmd *cmd, int *fd, char **env)
@@ -223,6 +247,40 @@ void	execute_cmd(t_pipex *pipex, char **env)
 	wait_all(pipex);
 }
 
+void	free_lst_all(t_cmd *lst)
+{
+	t_cmd	*tmp;
+	int		i;
+
+	while (lst)
+	{
+		tmp = lst->next;
+
+		if (lst->cmd_path)
+			free(lst->cmd_path);
+
+		if (lst->args)
+		{
+			i = 0;
+			while (lst->args[i])
+			{
+				free(lst->args[i]);
+				i++;
+			}
+			free(lst->args);
+		}
+
+		free(lst);
+		lst = tmp;
+	}
+}
+
+void	free_pipex(t_pipex *pipex)
+{
+	free_lst_all(pipex->cmd_lst);
+	free_pipex_tab(pipex->env);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_pipex	pipex;
@@ -235,8 +293,11 @@ int	main(int ac, char **av, char **env)
 		fill_cmd_lst(&pipex, av, ac);
 		execute_cmd(&pipex, env);
 		if (pipex.status)
+		{
+			free_pipex(&pipex);
 			exit(pipex.status);
+		}
 	}
-	free_pipex_tab(&pipex);
+	free_pipex(&pipex);
 	return (0);
 }

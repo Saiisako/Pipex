@@ -1,8 +1,60 @@
-42_pipex_tester
-free.c
-library
-list.c
-Makefile
-outfile
-pipex.c
-pipex.h
+pipex.c: Error!
+Error: TOO_MANY_LINES       (line:  46, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 104, col:   1):	Function has more than 25 lines
+Error: NEWLINE_PRECEDES_FUNC (line: 150, col:   1):	Functions must be separated by a newline
+Error: TOO_MANY_FUNCS       (line: 150, col:   1):	Too many functions in file
+Error: SPACE_AFTER_KW       (line: 155, col:   5):	Missing space after keyword
+Error: SPC_BFR_PAR          (line: 155, col:  10):	Missing space before parenthesis (brace/bracket)
+Error: TOO_MANY_FUNCS       (line: 164, col:   1):	Too many functions in file
+Error: WRONG_SCOPE_COMMENT  (line: 169, col:   5):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 170, col:   5):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 171, col:   5):	Comment is invalid in this scope
+Error: TOO_MANY_FUNCS       (line: 182, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 196, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 209, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 225, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 250, col:   1):	Too many functions in file
+Error: EMPTY_LINE_FUNCTION  (line: 258, col:   1):	Empty line in function
+Error: EMPTY_LINE_FUNCTION  (line: 261, col:   1):	Empty line in function
+Error: EMPTY_LINE_FUNCTION  (line: 272, col:   1):	Empty line in function
+Error: TOO_MANY_FUNCS       (line: 278, col:   1):	Too many functions in file
+Error: TOO_MANY_FUNCS       (line: 284, col:   1):	Too many functions in file
+Error: SPACE_EMPTY_LINE     (line: 287, col:   1):	Space on empty line
+pipex.h: Error!
+Error: HEADER_PROT_NAME     (line:  13, col:   9):	Wrong header protection name
+Error: TAB_REPLACE_SPACE    (line:  22, col:   1):	Found tab when expecting space
+Error: CONSECUTIVE_NEWLINES (line:  42, col:   1):	Consecutive newlines
+Error: HEADER_PROT_NODEF    (line:  57, col:   1):	Header protection not containing #define
+free.c: Error!
+Error: SPACE_EMPTY_LINE     (line:  18, col:   1):	Space on empty line
+Error: EMPTY_LINE_FUNCTION  (line:  20, col:   1):	Empty line in function
+list.c: OK!
+library/printf/ft_printf.c: OK!
+library/printf/ft_printf.h: OK!
+library/printf/printf_utils.c: OK!
+library/gnl/get_next_line.c: OK!
+library/gnl/get_next_line.h: OK!
+library/gnl/get_next_line_utils.c: OK!
+library/libft/ft_atoi.c: OK!
+library/libft/ft_bzero.c: OK!
+library/libft/ft_calloc.c: OK!
+library/libft/ft_isalnum.c: OK!
+library/libft/ft_isalpha.c: OK!
+library/libft/ft_isascii.c: OK!
+library/libft/ft_isdigit.c: OK!
+library/libft/ft_iswhitespace.c: OK!
+library/libft/ft_itoa.c: OK!
+library/libft/ft_putchar_fd.c: OK!
+library/libft/ft_putstr_fd.c: OK!
+library/libft/ft_split.c: Error!
+Error: BRACE_SHOULD_EOL     (line: 117, col:   1):	Expected newline after brace
+library/libft/ft_strcmp.c: OK!
+library/libft/ft_strdup.c: OK!
+library/libft/ft_strlcpy.c: OK!
+library/libft/ft_strlen.c: OK!
+library/libft/ft_strnlen.c: OK!
+library/libft/libft.h: Error!
+Error: INVALID_HEADER       (line:   1, col:   1):	Missing or invalid 42 header
+Error: LINE_TOO_LONG        (line:   1, col:   1):	line too long
+Error: SPACE_EMPTY_LINE     (line:   1, col:   2):	Space on empty line
+Error: LINE_TOO_LONG        (line:   1, col:  82):	line too long

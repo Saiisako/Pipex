@@ -6,11 +6,19 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:55:34 by skock             #+#    #+#             */
-/*   Updated: 2025/01/31 14:15:42 by skock            ###   ########.fr       */
+/*   Updated: 2025/01/31 17:36:27 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	update_count(char **path, int count)
+{
+	count = 0;
+	while (path[count])
+		count++;
+	return (count);
+}
 
 void	parsing_path(char **env, t_pipex *pipex)
 {
@@ -26,9 +34,7 @@ void	parsing_path(char **env, t_pipex *pipex)
 		if (strncmp("PATH=", env[i], 5) == 0)
 		{
 			path = ft_split(env[i] + 5, ':');
-			count = 0;
-			while (path[count])
-				count++;
+			count = update_count(path, 0);
 			pipex->env = malloc(sizeof(char *) * (count + 1));
 			j = -1;
 			while (path[++j])
@@ -58,9 +64,7 @@ char	*get_cmd_path(t_pipex *pipex, char *cmd)
 			return (NULL);
 		}
 		if (!access(res, X_OK))
-		{
 			return (res);
-		}
 		free(res);
 		i++;
 	}

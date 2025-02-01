@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 12:22:10 by skock             #+#    #+#             */
-/*   Updated: 2025/01/31 13:48:20 by skock            ###   ########.fr       */
+/*   Updated: 2025/02/01 12:51:43 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,23 @@ t_cmd	*ft_lstnew(t_pipex *pipex, char **av)
 		return (NULL);
 	new->args = ft_split(av[pipex->index], ' ');
 	new->cmd_path = get_cmd_path(pipex, new->args[0]);
+	new->pid = -2;
 	new->next = NULL;
 	new->index = index++;
 	pipex->index++;
 	return (new);
 }
 
-void	free_lst(t_cmd *lst)
+void free_lst(t_cmd *lst)
 {
-	t_cmd	*temp;
+	t_cmd *temp;
 
-	temp = NULL;
-	while(temp)
+	while (lst)
 	{
 		temp = lst->next;
 		free(lst);
 		lst = temp;
 	}
-	return ;
 }
 
 void	fill_cmd_lst(t_pipex *pipex, char **av, int ac)
@@ -70,8 +69,7 @@ void	fill_cmd_lst(t_pipex *pipex, char **av, int ac)
 			return ;
 		ft_lstadd_back(&pipex->cmd_lst, new_cmd);
 	}
-	if (pipex->status != 1)
-		pipex->status = 0;
+	pipex->status = 0;
 	if (!pipex->cmd_lst)
 	{
 		ft_putstr_fd("ERROR WHILE TRYING TO FILL LIST", 2);

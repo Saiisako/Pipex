@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:47:03 by skock             #+#    #+#             */
-/*   Updated: 2025/01/31 14:04:56 by skock            ###   ########.fr       */
+/*   Updated: 2025/02/01 16:06:44 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ void	here_doc(t_pipex *pipex, char **av)
 	free(limiter);
 }
 
+void	update_error(t_pipex *pipex, int ac, char **av)
+{
+	perror(av[ac - 1]);
+	pipex->status = 1;
+	free_pipex(pipex);
+	exit(1);
+}
+
 void	is_here_doc(t_pipex *pipex, char **av, int ac)
 {
 	pipex->index = 0;
@@ -46,10 +54,7 @@ void	is_here_doc(t_pipex *pipex, char **av, int ac)
 	{
 		pipex->outfile_fd = open(av[ac - 1], O_CREAT | O_RDWR | O_APPEND, 0644);
 		if (pipex->outfile_fd < 0)
-		{
-			perror(av[ac - 1]);
-			pipex->status = 1;
-		}
+			update_error(pipex, ac, av);
 		pipex->index = 3;
 		pipex->is_here_doc = true;
 		here_doc(pipex, av);
@@ -61,10 +66,7 @@ void	is_here_doc(t_pipex *pipex, char **av, int ac)
 			pipex->infile_fd = open("/dev/null", O_RDONLY);
 		pipex->outfile_fd = open(av[ac - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (pipex->outfile_fd < 0)
-		{
-			perror(av[ac - 1]);
-			pipex->status = 1;
-		}
+			update_error(pipex, ac, av);
 		pipex->is_here_doc = false;
 		pipex->index = 2;
 	}

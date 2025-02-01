@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 07:40:45 by skock             #+#    #+#             */
-/*   Updated: 2025/02/01 14:43:43 by skock            ###   ########.fr       */
+/*   Updated: 2025/02/01 17:56:30 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void child_process(t_pipex *pipex, t_cmd *cmd, int *fd, char **env)
 	close(pipex->infile_fd);
 	if (pipex->outfile_fd > 2)
 		close(pipex->outfile_fd);
-	if (!cmd->cmd_path)
-		exec_error(pipex, cmd);
+	// if (!cmd->cmd_path)
+	// 	exec_error(pipex, cmd);
 	execve(cmd->cmd_path, cmd->args, env);
 	exec_error(pipex, cmd);
 }
@@ -100,6 +100,7 @@ int	main(int ac, char **av, char **env)
 	pipex.cmd_lst = NULL;
 	if (ac >= 5)
 	{
+		pipex.status = 0;
 		parsing_path(env, &pipex);
 		is_here_doc(&pipex, av, ac);
 		fill_cmd_lst(&pipex, av, ac);

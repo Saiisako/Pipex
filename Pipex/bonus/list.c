@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 12:22:10 by skock             #+#    #+#             */
-/*   Updated: 2025/02/01 17:55:55 by skock            ###   ########.fr       */
+/*   Updated: 2025/02/02 13:45:59 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ t_cmd	*ft_lstnew(t_pipex *pipex, char **av)
 	return (new);
 }
 
-void free_lst(t_cmd *lst)
+void	free_lst(t_cmd *lst)
 {
-	t_cmd *temp;
+	t_cmd	*temp;
 
 	while (lst)
 	{

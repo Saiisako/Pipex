@@ -6,13 +6,13 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 07:40:45 by skock             #+#    #+#             */
-/*   Updated: 2025/02/01 17:56:30 by skock            ###   ########.fr       */
+/*   Updated: 2025/02/02 13:54:47 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void child_process(t_pipex *pipex, t_cmd *cmd, int *fd, char **env)
+void	child_process(t_pipex *pipex, t_cmd *cmd, int *fd, char **env)
 {
 	close(fd[0]);
 	dup2(pipex->infile_fd, STDIN_FILENO);
@@ -24,8 +24,6 @@ void child_process(t_pipex *pipex, t_cmd *cmd, int *fd, char **env)
 	close(pipex->infile_fd);
 	if (pipex->outfile_fd > 2)
 		close(pipex->outfile_fd);
-	// if (!cmd->cmd_path)
-	// 	exec_error(pipex, cmd);
 	execve(cmd->cmd_path, cmd->args, env);
 	exec_error(pipex, cmd);
 }
@@ -59,7 +57,7 @@ void	wait_all(t_pipex *pipex)
 			pipex->status = WEXITSTATUS(tmp);
 }
 
-void execute_cmd(t_pipex *pipex, char **env)
+void	execute_cmd(t_pipex *pipex, char **env)
 {
 	int		fd[2];
 	t_cmd	*temp;
@@ -68,10 +66,7 @@ void execute_cmd(t_pipex *pipex, char **env)
 	while (temp)
 	{
 		if (!temp->args[0])
-		{
-			free_pipex(pipex);
-			exit(1);
-		}
+			free_pipex_exit(pipex);
 		if (pipe(fd) < 0)
 		{
 			perror("Error while creating the pipe.\n");
@@ -80,10 +75,7 @@ void execute_cmd(t_pipex *pipex, char **env)
 		}
 		temp->pid = fork();
 		if (temp->pid == -1)
-		{
-			free_pipex(pipex);
-			exit(1);
-		}
+			free_pipex_exit(pipex);
 		if (temp->pid == 0)
 			child_process(pipex, temp, fd, env);
 		else
@@ -96,7 +88,7 @@ void execute_cmd(t_pipex *pipex, char **env)
 int	main(int ac, char **av, char **env)
 {
 	t_pipex	pipex;
-	
+
 	pipex.cmd_lst = NULL;
 	if (ac >= 5)
 	{

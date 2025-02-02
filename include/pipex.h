@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 07:42:03 by skock             #+#    #+#             */
-/*   Updated: 2025/01/31 14:00:31 by skock            ###   ########.fr       */
+/*   Created: 2025/02/02 13:47:49 by skock             #+#    #+#             */
+/*   Updated: 2025/02/02 14:02:49 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef PIPEX_H
+# define PIPEX_H
 
 # include "library/libft/libft.h"
 # include <sys/wait.h>
@@ -19,14 +19,14 @@
 # include <errno.h>
 # define HERE_DOC ".here_doc_temp"
 
-typedef	struct s_cmd
+typedef struct s_cmd
 {
 	char			*cmd_path;
 	char			**args;
 	pid_t			pid;
 	int				index;
 	struct s_cmd	*next;
-}			t_cmd;
+}					t_cmd;
 
 typedef struct s_pipex
 {
@@ -37,8 +37,7 @@ typedef struct s_pipex
 	int		outfile_fd;
 	bool	is_here_doc;
 	t_cmd	*cmd_lst;
-}				t_pipex;
-
+}			t_pipex;
 
 // PARSING
 void	parsing_path(char **env, t_pipex *pipex);
@@ -49,6 +48,7 @@ void	ft_lstadd_back(t_cmd **lst, t_cmd *new);
 t_cmd	*ft_lstnew(t_pipex *pipex, char **av);
 // FREE
 void	free_pipex_tab(char **args);
+void	free_pipex_exit(t_pipex *pipex);
 void	free_pipex(t_pipex *pipex);
 void	free_lst(t_cmd *cmd);
 void	free_lst_all(t_cmd *lst);
@@ -61,5 +61,6 @@ void	wait_all(t_pipex *pipex);
 // HERE_DOC
 void	here_doc(t_pipex *pipex, char **av);
 void	is_here_doc(t_pipex *pipex, char **av, int ac);
+void	update_perror_status(t_pipex *pipex, char **av, int ac);
 
 #endif

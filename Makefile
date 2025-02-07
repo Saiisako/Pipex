@@ -1,5 +1,5 @@
 NAME = pipex
-NAME_BONUS = pipex_bonus
+#NAME_BONUS = pipex_bonus
 CC = cc
 FLAGS = -Wall -Werror -Wextra -g
 RM = rm -rf
@@ -8,27 +8,27 @@ LIBFT_FLAGS = -L./library/libft -lft
 
 SRCS	=	pipex.c free.c list.c here_doc.c parsing.c
 
-SRCS_BONUS	=	Pipex/bonus/pipex.c\
-				Pipex/bonus/free.c\
-				Pipex/bonus/list.c\
-				Pipex/bonus/here_doc.c\
-				Pipex/bonus/parsing.c\
+#SRCS_BONUS	=	pipex.c\
+				free.c\
+				list.c\
+				here_doc.c\
+				parsing.c\
 
-OBJS_BONUS = $(SRCS_BONUS:.c=.o)
+#OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 OBJS = $(SRCS:.c=.o)
 
 TARGET = $(NAME)
 
-#$(NAME): $(LIBFT) $(OBJS)
-	#@$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS) $(LIBFT_FLAGS)
+$(NAME): $(LIBFT) $(OBJS)
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(MLX_FLAGS) $(LIBFT_FLAGS)
 
-$(NAME_BONUS): $(LIBFT) $(OBJS_BONUS)
-	@$(CC) $(FLAGS) -o $(NAME_BONUS) $(OBJS_BONUS) $(MLX_FLAGS) $(LIBFT_FLAGS)
+#$(NAME_BONUS): $(LIBFT) $(OBJS_BONUS)
+#	@$(CC) $(FLAGS) -o $(NAME_BONUS) $(OBJS_BONUS) $(MLX_FLAGS) $(LIBFT_FLAGS)
 
 $(LIBFT):
 	make -C library/libft
 
-bonus : $(NAME_BONUS)
+#bonus : $(NAME_BONUS)
 
 .c.o:
 	$(CC) $(FLAGS) -c -o $@ $<
@@ -37,12 +37,12 @@ all: $(NAME)
 
 clean:
 	@$(RM) $(OBJS)
-	@make -s -C library/libft clean
-	@echo "files erased successfully"
+#	@make -s -C library/libft clean
+#	@echo "files erased successfully"
 
 fclean: clean
 	@$(RM) $(NAME)
-	@make -s -C library/libft fclean
+#	@make -s -C library/libft fclean
 
 re: fclean all
 

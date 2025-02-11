@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 15:21:24 by skock             #+#    #+#             */
-/*   Updated: 2025/01/31 14:14:37 by skock            ###   ########.fr       */
+/*   Updated: 2025/02/11 13:34:09 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_bzero(void *s, size_t n);
 size_t	ft_strlen(const char *str);
 int		ft_strnlen(const char *str, char cut);
+char	*ft_strnstr(const char *big, const char *little, size_t len);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 
 #endif

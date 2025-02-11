@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 13:47:49 by skock             #+#    #+#             */
-/*   Updated: 2025/02/10 13:10:07 by skock            ###   ########.fr       */
+/*   Updated: 2025/02/11 13:54:25 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_pipex
 // PARSING
 void	parsing_path(char **env, t_pipex *pipex);
 char	*get_cmd_path(t_pipex *pipex, char *cmd);
+void	check_envp(char **envp);
 // LIST
 void	fill_cmd_lst(t_pipex *pipex, char **av, int ac);
 void	ft_lstadd_back(t_cmd **lst, t_cmd *new);

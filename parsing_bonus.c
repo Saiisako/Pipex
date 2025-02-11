@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 13:55:34 by skock             #+#    #+#             */
-/*   Updated: 2025/02/10 13:36:44 by skock            ###   ########.fr       */
+/*   Updated: 2025/02/11 13:54:15 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,21 @@ char	*get_cmd_path(t_pipex *pipex, char *cmd)
 		i++;
 	}
 	return (NULL);
+}
+
+void	check_envp(char **envp)
+{
+	int	i;
+	int	check;
+
+	i = -1;
+	check = 0;
+	while (envp[++i])
+		if (ft_strnstr(envp[i], "PATH=", 5) && envp[i][6])
+			check = 1;
+	if (!check)
+	{
+		ft_printf("Error: The environment PATH has not been found.");
+		exit(1);
+	}
 }

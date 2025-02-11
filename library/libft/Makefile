@@ -8,7 +8,7 @@ SRCS	=		ft_split.c ft_atoi.c ft_isalpha.c ft_isdigit.c ft_isascii.c ft_isalnum.c
 			ft_iswhitespace.c ../printf/ft_printf.c ../printf/printf_utils.c\
 			ft_calloc.c ft_strlen.c ft_itoa.c ft_strdup.c ft_strnlen.c\
 			ft_putchar_fd.c ft_putstr_fd.c ft_bzero.c ft_strcmp.c ft_strlcpy.c\
-			../gnl/get_next_line.c ../gnl/get_next_line_utils.c \
+			../gnl/get_next_line.c ../gnl/get_next_line_utils.c ft_strnstr.c\
 
 OBJS = $(SRCS:.c=.o)
 

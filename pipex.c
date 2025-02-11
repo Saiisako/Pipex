@@ -6,7 +6,7 @@
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:23:52 by skock             #+#    #+#             */
-/*   Updated: 2025/02/11 13:11:36 by skock            ###   ########.fr       */
+/*   Updated: 2025/02/11 13:54:47 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,7 @@ int	main(int ac, char **av, char **env)
 	t_pipex	pipex;
 
 	pipex.cmd_lst = NULL;
-	if (!env || !*env)
-	{
-		printf("here\n");
-		return (0);
-	}
+	check_envp(env);
 	if (ac == 5)
 	{
 		pipex.status = 0;

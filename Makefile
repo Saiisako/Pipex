@@ -46,4 +46,6 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus minilibx
+bonus_re: fclean bonus
+
+.PHONY: all clean fclean re bonus bonus_re

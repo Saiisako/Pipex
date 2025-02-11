@@ -1,22 +1,14 @@
-42_pipex_tester
-free_bonus.c
-free_bonus.o
-free.c
-here_doc_bonus.c
-here_doc_bonus.o
-here_doc.c
-library
-list_bonus.c
-list_bonus.o
-list.c
-Makefile
-outfile
-parsing_bonus.c
-parsing_bonus.o
-parsing.c
-pipex_bonus
-pipex_bonus.c
-pipex_bonus.h
-pipex_bonus.o
-pipex.c
-pipex.h
+NAME_BONUS = pipex_bonus
+LIBFT = library/libft/libft.a
+LIBFT_FLAGS = -L./library/libft -lft
+SRCS_BONUS	=	pipex_bonus.c\
+				free_bonus.c\
+				list_bonus.c\
+				here_doc_bonus.c\
+				parsing_bonus.c\
+	make -C library/libft
+bonus : $(NAME_BONUS)
+	@make -s -C library/libft clean
+	@make -s -C library/libft fclean
+bonus_re: fclean bonus
+.PHONY: all clean fclean re bonus bonus_re

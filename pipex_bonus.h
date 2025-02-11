@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/07 15:24:23 by skock             #+#    #+#             */
-/*   Updated: 2025/02/07 15:25:37 by skock            ###   ########.fr       */
+/*   Created: 2025/02/02 13:47:49 by skock             #+#    #+#             */
+/*   Updated: 2025/02/10 13:10:07 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include "library/libft/libft.h"
 # include <sys/wait.h>

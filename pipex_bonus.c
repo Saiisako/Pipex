@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skock <skock@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/07 15:23:52 by skock             #+#    #+#             */
-/*   Updated: 2025/02/11 13:11:36 by skock            ###   ########.fr       */
+/*   Created: 2025/02/07 15:24:06 by skock             #+#    #+#             */
+/*   Updated: 2025/02/11 13:15:48 by skock            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	child_process(t_pipex *pipex, t_cmd *cmd, int *fd, char **env)
 {
@@ -49,7 +49,8 @@ void	wait_all(t_pipex *pipex)
 	temp = pipex->cmd_lst;
 	while (temp)
 	{
-		waitpid(temp->pid, &tmp, 0);
+		while (waitpid(temp->pid, &tmp, 0) < 0)
+			;
 		temp = temp->next;
 	}
 	if (WIFEXITED(tmp))
@@ -89,13 +90,13 @@ int	main(int ac, char **av, char **env)
 {
 	t_pipex	pipex;
 
-	pipex.cmd_lst = NULL;
 	if (!env || !*env)
 	{
-		printf("here\n");
-		return (0);
+		printf("No environment path available.\n");
+		return (1);
 	}
-	if (ac == 5)
+	pipex.cmd_lst = NULL;
+	if (ac >= 5)
 	{
 		pipex.status = 0;
 		parsing_path(env, &pipex);
